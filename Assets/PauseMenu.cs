@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class PauseMenu : MonoBehaviour {
@@ -18,7 +19,7 @@ public class PauseMenu : MonoBehaviour {
 		}
 	}
 
-	void Resume () {
+	public void Resume () {
 		GameIsPaused = false;
 		// Set pausemenu game object to active
 		pauseMenuUI.SetActive (false);
@@ -32,5 +33,19 @@ public class PauseMenu : MonoBehaviour {
 		pauseMenuUI.SetActive (true);
 		// Freeze game time
 		Time.timeScale = 0f;
+	}
+
+	public void LoadMenu () {
+		Debug.Log ("loading menu..");
+		// TODO use const
+		// TODO build Main Menu Scene
+		// EditorSceneManager.LoadScene ("Menu");
+		// Makes sure timeScale is back to 1f etc
+		Resume ();
+	}
+
+	public void QuitGame () {
+		Debug.Log ("Quitting Game - does nothing in editor, hence this log");
+		Application.Quit ();
 	}
 }
