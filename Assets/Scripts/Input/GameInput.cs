@@ -23,6 +23,16 @@ public class GameInput : MonoBehaviour
     return Input.GetAxis("Vertical");
   }
 
+  public bool GetCastDown()
+  {
+    return Input.GetKeyDown(KeyCode.Space);
+  }
+
+  public bool GetCastUp()
+  {
+    return Input.GetKeyUp(KeyCode.Space);
+  }
+
   // Update is called once per frame
   void Update()
   {

@@ -12,8 +12,14 @@ public class PlayerController : MonoBehaviour
   [SerializeField]
   private float topSpeedX = 5;
 
+  [Header("Subsystems")]
+  [SerializeField]
+  private CastSystem castSystem;
+
   private GameInput input;
   private Rigidbody2D parentRb;
+
+  int castPower = 1;
 
   // Use this for initialization
   void Start()
@@ -26,6 +32,7 @@ public class PlayerController : MonoBehaviour
   void Update()
   {
     ProcessMovement();
+    ProcessCast();
   }
 
   void ProcessMovement()
@@ -43,6 +50,18 @@ public class PlayerController : MonoBehaviour
     }
 
     CapVelocity();
+  }
+
+  void ProcessCast()
+  {
+    if (input.GetCastDown())
+    {
+      castSystem.StartCast();
+    }
+    if (input.GetCastUp())
+    {
+      castSystem.EndCast();
+    }
   }
 
   /**

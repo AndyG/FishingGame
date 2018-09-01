@@ -41,6 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: WaterObjects
+    uniqueID: 2549632253
+    locked: 0
   - name: Player
     uniqueID: 3900198455
     locked: 0
