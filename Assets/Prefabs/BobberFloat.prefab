@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4345218800691560}
   - component: {fileID: 212852077740152382}
   - component: {fileID: 95769798427799130}
+  - component: {fileID: 114621817597046732}
   m_Layer: 0
   m_Name: BobberFloat
   m_TagString: Untagged
@@ -59,6 +60,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114621817597046732
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1368544520123414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d465a6050b7a448ea985cc3f423f9bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  indicatorPrototype: {fileID: 1505011711742622, guid: 500c2851e45d84e7abd008bc0bea2a4a,
+    type: 2}
+  offsetX: 0.25
+  offsetY: 0.25
 --- !u!212 &212852077740152382
 SpriteRenderer:
   m_ObjectHideFlags: 1

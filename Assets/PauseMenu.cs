@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour {
 
@@ -37,10 +38,8 @@ public class PauseMenu : MonoBehaviour {
 
 	public void LoadMenu () {
 		Debug.Log ("loading menu..");
-		// TODO use const
-		// TODO build Main Menu Scene
-		// EditorSceneManager.LoadScene ("Menu");
-		// Makes sure timeScale is back to 1f etc
+		// Load the next level
+		SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex - 1);
 		Resume ();
 	}
 

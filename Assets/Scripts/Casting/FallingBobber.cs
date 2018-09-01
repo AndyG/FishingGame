@@ -17,11 +17,17 @@ public class FallingBobber : MonoBehaviour
       GameObject go = GameObject.Instantiate(endBobberPrototype, this.transform.position, Quaternion.identity);
       go.transform.localScale = this.transform.localScale;
       GameObject.Destroy(gameObject);
+      NotifyPlayerCasted();
     }
   }
 
   public void SetTargetPosY(float targetPosY)
   {
     this.targetPosY = targetPosY;
+  }
+
+  private void NotifyPlayerCasted()
+  {
+    FindObjectOfType<PlayerController>().NotifyCasted();
   }
 }

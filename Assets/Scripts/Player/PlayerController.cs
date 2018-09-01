@@ -16,52 +16,101 @@ public class PlayerController : MonoBehaviour
   [SerializeField]
   private CastSystem castSystem;
 
+  [SerializeField]
+  private BiteSystem biteSystem;
+
+  [SerializeField]
+  private PlayerRenderer playerRenderer;
+
   private GameInput input;
   private Rigidbody2D parentRb;
 
   int castPower = 1;
+
+  private State state = State.IDLE;
 
   // Use this for initialization
   void Start()
   {
     this.parentRb = gameObject.transform.parent.GetComponent<Rigidbody2D>();
     this.input = FindObjectOfType<GameInput>();
+    this.biteSystem.OnBiteStartEvent += this.OnBiteStart;
+    this.biteSystem.OnBiteEndEvent += this.OnBiteEnd;
   }
 
   // Update is called once per frame
   void Update()
   {
-    ProcessMovement();
-    ProcessCast();
+    if (state == State.IDLE || state == State.CHARGING)
+    {
+      ProcessMovement();
+      ProcessCast();
+    }
+    else if (state == State.CASTED)
+    {
+      ProcessCastedInput();
+    }
   }
 
   void ProcessMovement()
   {
-    float inputHoriz = input.GetHorizontalAxis();
-
-    if (inputHoriz == 0)
+    if (this.state == State.IDLE)
     {
-      SetVelocityX(0);
+      float inputHoriz = input.GetHorizontalAxis();
+
+      if (inputHoriz == 0)
+      {
+        SetVelocityX(0);
+      }
+      else
+      {
+        float force = (inputHoriz) * speedHoriz;
+        parentRb.AddForce(Vector2.right * force, ForceMode2D.Impulse);
+      }
+
+      CapVelocity();
     }
     else
     {
-      float force = (inputHoriz) * speedHoriz;
-      parentRb.AddForce(Vector2.right * force, ForceMode2D.Impulse);
+      SetVelocityX(0);
     }
-
-    CapVelocity();
   }
 
   void ProcessCast()
   {
-    if (input.GetCastDown())
+    if (input.GetCastDown() && this.state == State.IDLE)
     {
       castSystem.StartCast();
+      SetState(State.CHARGING);
     }
-    if (input.GetCastUp())
+    if (input.GetCastUp() && this.state == State.CHARGING)
     {
       castSystem.EndCast();
+      SetState(State.CASTING);
     }
+  }
+
+  void ProcessCastedInput()
+  {
+    if (input.GetCastDown())
+    {
+      if (biteSystem.IsBiteHappening())
+      {
+        biteSystem.OnHookSet();
+      }
+      else
+      {
+        // TODO: trigger game over
+        SetState(State.IDLE);
+      }
+    }
+  }
+
+  /* A fish has been hooked! */
+  private void OnHookSet()
+  {
+    // Debug.Log("OnHookSet!");
+    // SetState(State.HOOKED);
   }
 
   /**
@@ -80,5 +129,45 @@ public class PlayerController : MonoBehaviour
   private void setVelocity(float x, float y)
   {
     parentRb.velocity = new Vector2(x, y);
+  }
+
+  public void NotifyCasted()
+  {
+    SetState(State.CASTED);
+  }
+
+  private void OnBiteStart()
+  {
+
+  }
+
+  private void OnBiteEnd(bool hooked)
+  {
+    if (!hooked)
+    {
+      SetState(State.IDLE);
+    }
+    else
+    {
+      SetState(State.HOOKED);
+    }
+  }
+
+  private void SetState(State state)
+  {
+    Debug.Log("State change from " + this.state + " to " + state);
+    this.state = state;
+    biteSystem.SetCasted(state == State.CASTED);
+    playerRenderer.SetState(state);
+  }
+
+  public enum State
+  {
+    IDLE,
+    CHARGING,
+    CASTING,
+    CASTED,
+    HOOKED,
+
   }
 }

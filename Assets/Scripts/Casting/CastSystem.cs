@@ -23,26 +23,32 @@ public class CastSystem : MonoBehaviour
 
   public void StartCast()
   {
-    timeSinceCastStart = 0f;
-    isCastStarted = true;
+    if (!isCastStarted)
+    {
+      timeSinceCastStart = 0f;
+      isCastStarted = true;
+    }
   }
 
   public void EndCast()
   {
-    isCastStarted = false;
-    int power = GetPowerFromCast();
-
-    Debug.Log("cast power: " + power);
-    if (power < 1 || power > 5)
+    if (isCastStarted)
     {
-      Debug.LogError("bad power");
+      isCastStarted = false;
+      int power = GetPowerFromCast();
+
+      Debug.Log("cast power: " + power);
+      if (power < 1 || power > 5)
+      {
+        Debug.LogError("bad power");
+      }
+
+      float scale = 1f / power;
+      GameObject go = GameObject.Instantiate(castObjectPrototype, this.transform.position, Quaternion.identity);
+      go.transform.localScale = new Vector3(scale, scale, 1);
+
+      go.GetComponent<FallingBobber>().SetTargetPosY(GetDistanceYFromPower(power));
     }
-
-    float scale = 1f / power;
-    GameObject go = GameObject.Instantiate(castObjectPrototype, this.transform.position, Quaternion.identity);
-    go.transform.localScale = new Vector3(scale, scale, 1);
-
-    go.GetComponent<FallingBobber>().SetTargetPosY(GetDistanceYFromPower(power));
   }
 
   private int GetPowerFromCast()
