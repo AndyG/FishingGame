@@ -56,15 +56,12 @@ public class PlayerController : MonoBehaviour
   {
     if (input.GetCastDown())
     {
-      castSystem.Cast(castPower);
-
-      castPower++;
-      if (castPower >= 6)
-      {
-        castPower = 1;
-      }
+      castSystem.StartCast();
     }
-
+    if (input.GetCastUp())
+    {
+      castSystem.EndCast();
+    }
   }
 
   /**

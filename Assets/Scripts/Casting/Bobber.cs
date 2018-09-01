@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Bobber : MonoBehaviour
 {
-  private float targetPosY = 0f;
-
-  // Update is called once per frame
   void Update()
   {
   }
