@@ -74,7 +74,6 @@ public class BiteSystem : MonoBehaviour
 
   private void SetBiteHappening(bool isBiteHappening, bool hooked)
   {
-    Debug.Log("setting bite happening: " + isBiteHappening);
     this.isBiteHappening = isBiteHappening;
 
     if (isBiteHappening)

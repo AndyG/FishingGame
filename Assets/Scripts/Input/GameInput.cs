@@ -5,6 +5,12 @@ using UnityEngine;
 public class GameInput : MonoBehaviour
 {
 
+  private DialogHook dialogHook;
+  void Start()
+  {
+    this.dialogHook = FindObjectOfType<DialogHook>();
+  }
+
   public float GetHorizontalAxis()
   {
     float axis = Input.GetAxis("Horizontal");

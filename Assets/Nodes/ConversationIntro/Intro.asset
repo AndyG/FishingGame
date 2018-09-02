@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75513f9d37e4f436d82bfa04451bcb7d, type: 3}
+  m_Name: Intro
+  m_EditorClassIdentifier: 
+  characterName: Conscience
+  image: {fileID: 21300000, guid: c818170822c8d4e86865627069fbbf3e, type: 3}
+  text:
+  - Finally...
+  - Away from the noise of the world, out where my heart belongs...
+  - (I should press SPACE to cast my hook)
+  choices: []
+  successFishName: 
+  failureFishName: 
+  nextNode: {fileID: 0}

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75513f9d37e4f436d82bfa04451bcb7d, type: 3}
+  m_Name: BootEntry
+  m_EditorClassIdentifier: 
+  characterName: Boot
+  image: {fileID: 21300000, guid: e66938c941e8545d3ba95944b4d43cdb, type: 3}
+  text:
+  - (It's a boot.)
+  - (I wonder if it fits?)
+  - '*squish*'
+  - '... wow!'
+  - This boot lets me stop thinking in parentheses.
+  - (But I've done it my whole life. No stopping now.)
+  choices: []
+  successFishName: BOOT
+  failureFishName: 
+  nextNode: {fileID: 0}

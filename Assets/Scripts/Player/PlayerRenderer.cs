@@ -5,10 +5,11 @@ using UnityEngine;
 public class PlayerRenderer : MonoBehaviour
 {
 
-  private SpriteRenderer renderer;
+  private SpriteRenderer spriteRenderer;
 
-  private bool isCharging = false;
-  private bool isCasted;
+  private PlayerController.State state;
+
+  private int power = 1;
 
   private ChargeCycleColors currentChargeColorMod = ChargeCycleColors.RED;
 
@@ -38,68 +39,95 @@ public class PlayerRenderer : MonoBehaviour
   [Range(0, 0.1f)]
   private float alphaStep = 0.05f;
 
+
+  [Header("Sprites")]
+  [SerializeField]
+  private Sprite idleSprite;
+
+  [SerializeField]
+  private Sprite chargingSprite;
+
+  [SerializeField]
+  private Sprite castingSprite;
+
   // Use this for initialization
   void Start()
   {
-    this.renderer = GetComponent<SpriteRenderer>();
+    this.spriteRenderer = GetComponent<SpriteRenderer>();
   }
 
   // Update is called once per frame
   void Update()
   {
-    if (isCharging)
+    if (state == PlayerController.State.CHARGING)
     {
-      CycleColor();
-      OscillateSize();
+      if (this.power > 2)
+      {
+        OscillateSize();
+      }
+      else
+      {
+        this.transform.localScale = new Vector3(1, 1, 1);
+      }
+
+      if (this.power > 4)
+      {
+        CycleColor();
+      }
+      else
+      {
+        spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
+      }
+
       FadeAlphaIn();
+      SetChargingSprite();
     }
-    else if (isCasted)
+    else if (state == PlayerController.State.CASTED)
     {
       FadeAlphaOut();
+      spriteRenderer.color = new Color(1f, 1f, 1f, spriteRenderer.color.a);
       this.transform.localScale = new Vector3(1, 1, 1);
+      SetIdleSprite();
     }
-    else
+    else if (state == PlayerController.State.CASTING)
     {
-      renderer.color = new Color(1f, 1f, 1f, renderer.color.a);
+      FadeAlphaIn();
+      spriteRenderer.color = new Color(1f, 1f, 1f, spriteRenderer.color.a);
+      this.transform.localScale = new Vector3(1, 1, 1);
+      SetCastingSprite();
+    }
+    else // idle
+    {
+      spriteRenderer.color = new Color(1f, 1f, 1f, spriteRenderer.color.a);
       FadeAlphaIn();
       this.transform.localScale = new Vector3(1, 1, 1);
+      SetIdleSprite();
     }
   }
 
   private void FadeAlphaOut()
   {
-    Color curColor = renderer.color;
+    Color curColor = spriteRenderer.color;
     if (curColor.a > minAlpha)
     {
       float newAlpha = curColor.a - alphaStep;
-      renderer.color = new Color(curColor.r, curColor.g, curColor.b, newAlpha);
+      spriteRenderer.color = new Color(curColor.r, curColor.g, curColor.b, newAlpha);
     }
   }
 
   private void FadeAlphaIn()
   {
-    Color curColor = renderer.color;
+    Color curColor = spriteRenderer.color;
     if (curColor.a < 1f)
     {
       float newAlpha = curColor.a + alphaStep;
-      renderer.color = new Color(curColor.r, curColor.g, curColor.b, newAlpha);
+      spriteRenderer.color = new Color(curColor.r, curColor.g, curColor.b, newAlpha);
     }
   }
 
   public void SetState(PlayerController.State state)
   {
-    SetCharging(state == PlayerController.State.CHARGING);
-    SetCasted(state == PlayerController.State.CASTED);
-  }
-
-  public void SetCharging(bool isCharging)
-  {
-    this.isCharging = isCharging;
-  }
-
-  private void SetCasted(bool isCasted)
-  {
-    this.isCasted = isCasted;
+    this.state = state;
   }
 
   private void OscillateSize()
@@ -122,7 +150,7 @@ public class PlayerRenderer : MonoBehaviour
 
   private void CycleColor()
   {
-    Color currentColor = renderer.color;
+    Color currentColor = spriteRenderer.color;
     if (currentChargeColorMod == ChargeCycleColors.RED)
     {
       float redComponent = currentColor.r;
@@ -139,10 +167,8 @@ public class PlayerRenderer : MonoBehaviour
         currentChargeColorMod = ChargeCycleColors.GREEN;
         chargeCycleDirection = -1;
       }
-      Debug.Log("new red component: " + newRedComponent);
-      Color newColor = new Color(newRedComponent, currentColor.g, currentColor.b, renderer.color.a);
-      renderer.color = newColor;
-      Debug.Log("new color: " + renderer.color);
+      Color newColor = new Color(newRedComponent, currentColor.g, currentColor.b, spriteRenderer.color.a);
+      spriteRenderer.color = newColor;
     }
     else if (currentChargeColorMod == ChargeCycleColors.GREEN)
     {
@@ -160,8 +186,8 @@ public class PlayerRenderer : MonoBehaviour
         currentChargeColorMod = ChargeCycleColors.BLUE;
         chargeCycleDirection = -1;
       }
-      Color newColor = new Color(currentColor.r, newGreenComponent, currentColor.b, renderer.color.a);
-      renderer.color = newColor;
+      Color newColor = new Color(currentColor.r, newGreenComponent, currentColor.b, spriteRenderer.color.a);
+      spriteRenderer.color = newColor;
     }
     else if (currentChargeColorMod == ChargeCycleColors.BLUE)
     {
@@ -179,9 +205,29 @@ public class PlayerRenderer : MonoBehaviour
         currentChargeColorMod = ChargeCycleColors.RED;
         chargeCycleDirection = -1;
       }
-      Color newColor = new Color(currentColor.r, currentColor.g, newBlueComponent, renderer.color.a);
-      renderer.color = newColor;
+      Color newColor = new Color(currentColor.r, currentColor.g, newBlueComponent, spriteRenderer.color.a);
+      spriteRenderer.color = newColor;
     }
+  }
+
+  public void SetPower(int power)
+  {
+    this.power = power;
+  }
+
+  private void SetIdleSprite()
+  {
+    spriteRenderer.sprite = idleSprite;
+  }
+
+  private void SetCastingSprite()
+  {
+    spriteRenderer.sprite = castingSprite;
+  }
+
+  private void SetChargingSprite()
+  {
+    spriteRenderer.sprite = chargingSprite;
   }
 
   private enum ChargeCycleColors
