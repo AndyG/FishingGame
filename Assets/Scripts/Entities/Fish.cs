@@ -5,6 +5,9 @@ using UnityEngine;
 public class Fish : MonoBehaviour
 {
 
+  [SerializeField]
+  public bool justBoot = false;
+
   private List<Fishes> CATCHABLE_FISH;
 
   void Start()
@@ -16,8 +19,11 @@ public class Fish : MonoBehaviour
   {
     List<Fishes> fish = new List<Fishes>();
     fish.Add(Fishes.BOOT);
-    fish.Add(Fishes.JIM);
-    fish.Add(Fishes.KAT);
+    if (!justBoot)
+    {
+      fish.Add(Fishes.JIM);
+      fish.Add(Fishes.KAT);
+    }
     return fish;
   }
 

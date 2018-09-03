@@ -11,10 +11,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Winnar.unity
     guid: 06609ad39c8894ee1a2e162b94d90f20
-  - enabled: 0
-    path: Assets/Scenes/MainMenu.unity
-    guid: eb29f6d2fae754b7fb9f15ba3f11f1af
-  - enabled: 0
-    path: Assets/Scenes/YerDead.unity
-    guid: fb9af57d97fed44eebf131fd90604c3a
   m_configObjects: {}

@@ -11,5 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0227300f6a3904e23b2f59a1a69c1742, type: 3}
   m_Name: Choice2
   m_EditorClassIdentifier: 
-  text: Flirt
+  text: A little love
   result: {fileID: 11400000, guid: c751e6b103d9146ab96b736f44cf78c7, type: 2}

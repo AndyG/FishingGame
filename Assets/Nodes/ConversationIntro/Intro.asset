@@ -16,7 +16,7 @@ MonoBehaviour:
   text:
   - Finally...
   - Away from the noise of the world, out where my heart belongs...
-  - (I should press SPACE to cast my hook)
+  - (I should hold SPACE to cast, and press it again when I get a bite)
   choices: []
   successFishName: 
   failureFishName: 

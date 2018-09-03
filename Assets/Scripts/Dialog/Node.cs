@@ -21,6 +21,9 @@ public class Node : ScriptableObject
 
   public Node nextNode;
 
+  public bool startExcitedMusic = false;
+  public bool stopMusic = false;
+
   public bool HasChoices()
   {
     return choices != null && choices.Count > 0;

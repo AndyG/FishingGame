@@ -45,6 +45,12 @@ public class PlayerController : MonoBehaviour
   private AudioClip caughtAudioClip;
 
   [SerializeField]
+  private float dadVolume;
+
+  [SerializeField]
+  private AudioClip dadAudioClip;
+
+  [SerializeField]
   private Node innerPowerDialog;
 
   [SerializeField]
@@ -85,14 +91,14 @@ public class PlayerController : MonoBehaviour
     this.SetState(State.IDLE);
     DestroyAllBobbers();
     caughtFishCount++;
-    if (caughtFishCount == 3)
+    if (caughtFishCount == 3 || (caughtFishCount == 1 && FindObjectOfType<Fish>().justBoot))
     {
       PlayInnerPowerDialog();
     }
 
     if (fish == Fish.Fishes.DAD)
     {
-      FindObjectOfType<MySceneManager>().Load(1);
+      FindObjectOfType<LevelChanger>().FadeToLevel(1);
     }
   }
 
@@ -255,7 +261,15 @@ public class PlayerController : MonoBehaviour
         Fish.Fishes fish = fishManager.GetRandomFish();
         Node conversation = fishManager.GetConversation(fish);
         dialogRenderer.StartConversation(conversation);
-        this.playerAudioSource.PlayOneShot(this.caughtAudioClip);
+        if (fish != Fish.Fishes.DAD)
+        {
+          this.playerAudioSource.PlayOneShot(this.caughtAudioClip);
+        }
+        else
+        {
+          this.playerAudioSource.volume = dadVolume;
+          this.playerAudioSource.PlayOneShot(this.dadAudioClip);
+        }
       }
       else
       {

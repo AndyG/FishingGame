@@ -11,5 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0227300f6a3904e23b2f59a1a69c1742, type: 3}
   m_Name: Choice1
   m_EditorClassIdentifier: 
-  text: Piss Off
+  text: My origins
   result: {fileID: 11400000, guid: d98e9d03fadb24ceabcd05e60e29b84a, type: 2}

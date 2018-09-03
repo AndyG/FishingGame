@@ -24,3 +24,5 @@ MonoBehaviour:
   successFishName: BOOT
   failureFishName: 
   nextNode: {fileID: 0}
+  startExcitedMusic: 0
+  stopMusic: 0

@@ -11,11 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75513f9d37e4f436d82bfa04451bcb7d, type: 3}
   m_Name: JimNode4
   m_EditorClassIdentifier: 
-  characterName: Elie Fishington
+  characterName: Jim
   image: {fileID: 21300000, guid: 0b7f74431ff244eb0b5793c3af553966, type: 3}
   text:
-  - Awesome, great to hear it!
+  - I might be just the fish you're looking for...
   choices: []
   successFishName: JIM
   failureFishName: 
   nextNode: {fileID: 0}
+  startExcitedMusic: 0
+  stopMusic: 0
